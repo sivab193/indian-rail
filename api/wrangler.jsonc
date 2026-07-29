@@ -1,0 +1,15 @@
+{
+  "name": "indian-rail-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-29",
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "indian-rail-db",
+      "database_id": "dummy-id-for-local-dev"
+    }
+  ]
+}
