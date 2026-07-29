@@ -30,7 +30,7 @@ You can instantly convert this OpenAPI server into an MCP server using the offic
   "command": "npx",
   "args": [
     "-y",
-    "@modelcontextprotocol/server-openapi",
+    "mcp-openapi-runner",
     "https://train.siv19.dev/openapi.json"
   ]
 }
