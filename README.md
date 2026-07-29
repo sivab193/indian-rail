@@ -43,11 +43,13 @@ You can instantly convert this OpenAPI server into an MCP server using the offic
 3. Under "Schema", select **Import from URL** and paste `https://train.siv19.dev/openapi.json`.
 4. ChatGPT will instantly recognize all the endpoints and use them to answer live train questions.
 
-### 3. Google Gemini
-1. Open **Google AI Studio**.
-2. Navigate to **Tools** -> **Create OpenAPI Extension**.
-3. Provide the `https://train.siv19.dev/openapi.json` URL.
-4. Your Gemini model can now natively query the Indian Railways dataset!
+### 3. Google Gemini API (Function Calling)
+Google AI Studio recently updated its UI and migrated away from the legacy "Extensions" menu. To use this API with Gemini today, you use **Function Calling**:
+1. Open **Google AI Studio** and go to the **Playground**.
+2. On the right-hand panel, click **Tools** -> **Add Function**.
+3. You can paste the exact JSON parameters from our `openapi.json` into the Function Declaration.
+4. When you ask Gemini a question, it will output a structured API call that perfectly matches our Cloudflare backend!
+(If you are coding a custom app with the `@google/genai` SDK, you simply pass these OpenAPI schemas into the `tools: [{ functionDeclarations: [...] }]` array).
 
 ---
 
