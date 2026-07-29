@@ -17,6 +17,38 @@ The API directory contains a modern TypeScript backend built on **Hono.js** and 
 * **Agentic / MCP Compatible**: Because it exposes an OpenAPI 3.0 specification, modern AI Agents can natively ingest the `/openapi.json` endpoint and utilize the API as a set of tools (identical to the Model Context Protocol).
 * **Interactive UI**: The root endpoint `/` serves a gorgeous Swagger UI dashboard for manual API testing.
 
+## AI Agent Integration (MCP & OpenAPI)
+
+Because this backend emits a standard OpenAPI schema, it functions identically to an MCP (Model Context Protocol) server. Here is how you can plug this train database directly into popular AI agents:
+
+### 1. Claude Desktop & AGY (Native MCP)
+You can instantly convert this OpenAPI server into an MCP server using the official OpenAPI MCP proxy wrapper.
+1. Open your `mcp.json` or `claude_desktop_config.json`.
+2. Add the following to your `mcpServers` object:
+```json
+"indian-railways": {
+  "command": "npx",
+  "args": [
+    "-y",
+    "@modelcontextprotocol/server-openapi",
+    "https://train.siv19.dev/openapi.json"
+  ]
+}
+```
+3. Restart your agent. It will now automatically have tools like `getTrainRoute` and `getLiveStationRoute`.
+
+### 2. ChatGPT (Custom Actions)
+1. Create a **Custom GPT**.
+2. Scroll down and click **Create new action**.
+3. Under "Schema", select **Import from URL** and paste `https://train.siv19.dev/openapi.json`.
+4. ChatGPT will instantly recognize all the endpoints and use them to answer live train questions.
+
+### 3. Google Gemini
+1. Open **Google AI Studio**.
+2. Navigate to **Tools** -> **Create OpenAPI Extension**.
+3. Provide the `https://train.siv19.dev/openapi.json` URL.
+4. Your Gemini model can now natively query the Indian Railways dataset!
+
 ---
 
 ## Hosting Costs (100% Free)
