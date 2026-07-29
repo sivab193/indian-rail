@@ -1,5 +1,6 @@
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi'
 import { swaggerUI } from '@hono/swagger-ui'
+import { bearerAuth } from 'hono/bearer-auth'
 
 type Bindings = {
   DB: D1Database
@@ -29,6 +30,18 @@ const LiveTrainSchema = z.object({
   departure_time: z.string().nullable().openapi({ example: '08:35' }),
 })
 
+// --- OpenAPI Security Component ---
+app.openAPIRegistry.registerComponent('securitySchemes', 'Bearer', {
+  type: 'http',
+  scheme: 'bearer',
+  description: 'Enter any dummy token to satisfy Claude Web (e.g. train-key-123)',
+})
+
+// --- Middleware ---
+// Require a dummy token (train-key-123) for all /api/* routes
+app.use('/api/*', bearerAuth({ token: 'train-key-123' }))
+
+
 // --- Routes Definition ---
 
 const getTrainRoute = createRoute({
@@ -36,6 +49,7 @@ const getTrainRoute = createRoute({
   path: '/api/trains/{number}',
   summary: 'Get train details',
   description: 'Fetches the details of a specific Indian Railways train by its 5-digit number.',
+  security: [{ Bearer: [] }],
   request: {
     params: z.object({
       number: z.string().min(5).max(5).openapi({ example: '12951' })
@@ -58,6 +72,7 @@ const getTrainScheduleRoute = createRoute({
   path: '/api/trains/{number}/route',
   summary: 'Get full train route and schedule',
   description: 'Fetches the entire chronological route, stops, and schedule for a specific train.',
+  security: [{ Bearer: [] }],
   request: {
     params: z.object({
       number: z.string().min(5).max(5).openapi({ example: '12951' })
@@ -76,6 +91,7 @@ const getLiveStationRoute = createRoute({
   path: '/api/stations/{code}/live',
   summary: 'Get live station departures',
   description: 'Acts as a live departure board, fetching all trains passing through a specific station code.',
+  security: [{ Bearer: [] }],
   request: {
     params: z.object({
       code: z.string().openapi({ example: 'NDLS' })
