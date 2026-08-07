@@ -422,19 +422,19 @@ app.get('/stats', async (c) => {
         
         ${results.length === 0 ? '<div class="empty-state">No API hits recorded yet.</div>' : ''}
         
-        ${results.length > 0 ? \`
+        ${results.length > 0 ? `
         <table>
           <thead><tr><th>Endpoint Path</th><th>Total Hits</th></tr></thead>
           <tbody>
-            \${results.map(row => \`
+            ${results.map(row => `
               <tr>
-                <td class="endpoint-path">\${row.endpoint}</td>
-                <td><span class="hit-badge">\${row.hit_count}</span></td>
+                <td class="endpoint-path">${row.endpoint}</td>
+                <td><span class="hit-badge">${row.hit_count}</span></td>
               </tr>
-            \`).join('')}
+            `).join('')}
           </tbody>
         </table>
-        \` : ''}
+        ` : ''}
       </div>
     </body>
     </html>
