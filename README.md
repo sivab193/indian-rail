@@ -105,3 +105,5 @@ npx wrangler d1 execute indian-rail-db --file=../tag_production_dump_clean.sql
 # 3. Deploy the API to Cloudflare Workers
 npm run deploy
 ```
+
+*(Note: If you have configured the `CLOUDFLARE_API_TOKEN` in your GitHub repository secrets, pushing to the `main` branch will automatically deploy the API via GitHub Actions!)*
